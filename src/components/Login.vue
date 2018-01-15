@@ -2,8 +2,8 @@
 	<div class="login">
 		<el-form :model="adminUser" :rules="rules" ref="adminUser">
 			<strong class="title"></strong>
-			<el-form-item prop="username">
-				<el-input placeholder="用户名" v-model="adminUser.username"></el-input>
+			<el-form-item prop="email">
+				<el-input placeholder="用户名" v-model="adminUser.email"></el-input>
 			</el-form-item>
 			<el-form-item prop="password">
 				<el-input type="password" placeholder="密码" v-model="adminUser.password" @keyup.enter.native="login('adminUser')"></el-input>
@@ -18,6 +18,7 @@
 <script>
 	import md5 from 'md5'
 	import Api from '@/api'
+	import axios from 'axios'
 	// import { Admin } from '@/api'
 	// import * as types from '@/vuex/types'
 	// import constant from '@/api/Constants'
@@ -26,11 +27,11 @@
 		data() {
 			return {
 				adminUser: {
-					username: '',
+					email: '',
 					password: ''
 				},
 				rules: {
-					username: [
+					email: [
 						{ required: true, message: '请输入用户名', trigger: 'blur' }
 					],
 					password: [
@@ -42,30 +43,43 @@
 		methods: {
 			async login(formName) {
 				let self = this;
-				let promise = new Promise((resolve, reject) => {
-					self.$refs[formName].validate(valid => {
-						if (valid) {
-							resolve(true);
-						} else {
-							reject('error')
-						}
-					})
-				})
-				promise.then(success => {
-					let sendData = self.adminUser
-					sendData.password = md5(sendData.password)
-					console.log(sendData);
-					Api.login(sendData.username, sendData.password).then(res => {
-						let data = res.data
-						// this.$store.commit(types.USERDATA, res.data)
-						this.$router.push('/index')
+				axios({
+					method: 'post',
+					url: 'http://localhost:3000/api/v1/login',
+					data: {
+					  email: 'xiaojie@gmail.com',
+					  password: 'e10adc3949ba59abbe56e057f20f883e'
+					}
+				}).then(() => {
+					this.$router.push('/index')
+				}).catch(e => alert(e.message))
+				// Api.login('admin', '123456').then(() => {
+				// 	this.$router.push('/index')
+				// })
+		// 		let promise = new Promise((resolve, reject) => {
+		// 			self.$refs[formName].validate(valid => {
+		// 				if (valid) {
+		// 					resolve(true);
+		// 				} else {
+		// 					reject('error')
+		// 				}
+		// 			})
+		// 		})
+		// 		promise.then(success => {
+		// 			let sendData = self.adminUser
+		// 			sendData.password = md5(sendData.password)
+		// 			console.log(sendData);
+		// 			Api.login(sendData.email, sendData.password).then(res => {
+		// 				let data = res.data
+		// 				// this.$store.commit(types.USERDATA, res.data)
+		// 				this.$router.push('/index')
 						
-					}).catch(err=>{
-						this.$message.error(err)
-					})
-				}, error => {
-					this.$message(data.message)
-				})
+		// 			}).catch(err=>{
+		// 				this.$message.error(err)
+		// 			})
+		// 		}, error => {
+		// 			this.$message(data.message)
+		// 		})
 			}
 		}
 	}

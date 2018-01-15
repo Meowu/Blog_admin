@@ -2,7 +2,13 @@
 export default {
   name: "Sidebar",
   data() {
-    return {}
+    return {
+      isCollapse: false,
+    }
+  },
+  methods: {
+    handleOpen() {},
+    handleClose() {},
   }
 }
 </script>

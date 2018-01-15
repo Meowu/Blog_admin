@@ -43,10 +43,10 @@ export default {
       return this.$store.state.isLoading;
     },
     offsetLeft() {
-      if (this.hasSidebar()) {
-        return 180;
-      }
-      return 0;
+      // if (this.hasSidebar()) {
+      //   return 180;
+      // }
+      return 180;
     },
     hiddenSidebar() {
       let sidebar = this.hasSidebar();

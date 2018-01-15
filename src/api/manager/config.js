@@ -3,7 +3,8 @@ const DEFAULT_X_HEADER = {
 }
 
 const DEFAULT_JSON_HEADER = {
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
 }
 
 const BASE_URL = 'http://localhost:3000/api/v1'
