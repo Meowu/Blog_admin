@@ -1,19 +1,11 @@
-import Admin from './Admin'
-import Advertise from './Advertise'
-import Config from './Config'
-import Menu from './Menu'
-import Product from './Product'
-import Tool from './Tool'
-import User from './User'
-import Article from './Article'
+import Api from './manager/ApiManager'
 
-export {
-  Admin,
-  Advertise,
-  Config,
-  Menu,
-  Product,
-  Tool,
-  User,
-  Article
+export default {
+  login(username, password) {
+    const data = {
+      url: '/login',
+      params: {}
+    }
+    return Api.post(data)
+  }
 }

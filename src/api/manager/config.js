@@ -6,7 +6,7 @@ const DEFAULT_JSON_HEADER = {
   'Content-Type': 'application/json'
 }
 
-const BASE_URL = 'http://api.jbangit.com:8008/cms'
+const BASE_URL = 'http://localhost:3000/api/v1'
 export const baseSource = ''
 
 export default {

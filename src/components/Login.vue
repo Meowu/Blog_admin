@@ -17,8 +17,9 @@
 
 <script>
 	import md5 from 'md5'
+	import Api from '@/api'
 	// import { Admin } from '@/api'
-	import * as types from '@/vuex/types'
+	// import * as types from '@/vuex/types'
 	// import constant from '@/api/Constants'
 
 	export default {
@@ -53,9 +54,10 @@
 				promise.then(success => {
 					let sendData = self.adminUser
 					sendData.password = md5(sendData.password)
-					Admin.login(sendData.username, sendData.password).then(res => {
+					console.log(sendData);
+					Api.login(sendData.username, sendData.password).then(res => {
 						let data = res.data
-						this.$store.commit(types.USERDATA, res.data)
+						// this.$store.commit(types.USERDATA, res.data)
 						this.$router.push('/index')
 						
 					}).catch(err=>{
