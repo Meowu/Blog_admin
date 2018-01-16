@@ -1,17 +1,17 @@
 <template>
-    <div class="region-list" style="margin: 15px">
-        <el-button icon="el-icon-plus" @click="dialogFormVisible = true" style="margin-bottom: 5px;"></el-button>
+    <div class="region-list" style="padding: 15px; background:#fff;">
+        <el-button icon="el-icon-plus" size='small' @click="dialogFormVisible = true" style="margin-bottom: 5px;"></el-button>
          <el-table :data="tags" stripe highlight-current-row >
-            <el-table-column type='index' label="序号"></el-table-column>
-            <el-table-column prop="name" label="标签名"></el-table-column>
+            <el-table-column align='center' type='index' width='80' label="序号"></el-table-column>
+            <el-table-column align='center' prop="name" width='300' label="标签名"></el-table-column>
             <el-table-column label='操作'>
                 <template scope="scope">
-                    <el-button type="plain" @click="editTag(scope.row._id)">更改</el-button>
-                    <el-button type="danger" @click="deleteTag(scope.row._id)">删除</el-button>
+                    <el-button type="plain" size='small' @click="editTag(scope.row._id)">更改</el-button>
+                    <el-button type="danger" size='small' @click="deleteTag(scope.row._id)">删除</el-button>
                 </template>
             </el-table-column>
          </el-table>
-        <el-dialog title="添加标签" :visible.sync="dialogFormVisible" style="text-align: center;">
+        <el-dialog title="添加标签" @close='id = null' :visible.sync="dialogFormVisible" style="text-align: center;">
             <el-input v-model="newTag" placeholder="请输入标签名" ></el-input>
             <el-button type="primary" @click="confirm">确 定</el-button>
         </el-dialog>
@@ -53,13 +53,13 @@ export default {
               this.$message.success('添加成功')
               this.dialogFormVisible = false
             }).catch(e => {
-              this.id = null 
               this.showError(e.message)
             })
           } else {
             Api.putTags(this.id, this.newTag).then(() => {
               this.getTags() 
               this.show('更改成功')
+              this.id = null
               this.dialogFormVisible = false
             }).catch(e => {
               this.id = null 

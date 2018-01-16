@@ -26,29 +26,29 @@ export default {
       </div>
       <el-submenu index="/index">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-success"></i>
           <span slot="title">首页统计</span>
         </template>
           <el-menu-item index="/index">数据统计</el-menu-item>
-          <el-menu-item index="1-4-1">图表查看</el-menu-item>
+          <el-menu-item index="/charts">图表查看</el-menu-item>
       </el-submenu>
       <el-submenu index="/articles">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-document"></i>
           <span slot="title">文章管理</span>
         </template>
           <el-menu-item index="/articles">文章列表</el-menu-item>
-          <el-menu-item index="1-4-1">评论列表</el-menu-item>
+          <el-menu-item index="/comments">评论列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="/tags">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-service"></i>
         <span slot="title">标签管理</span>
       </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/categories">
+        <i class="el-icon-tickets"></i>
         <span slot="title">分类管理</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="/settings">
         <i class="el-icon-setting"></i>
         <span slot="title">全局设置</span>
       </el-menu-item>
