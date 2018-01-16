@@ -52,11 +52,14 @@ export default {
             "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=750&q=80"
           ]
         }
-      ]
+      ],
+    list: []
     };
   },
-  create() {
-
+  created() {
+    Api.getArticles({page: 1, page_size: 10}).then(res => {
+      this.list = res.data
+    })
   },
   render(h) {
     const articles = this.articles.map(article => h(Card, {

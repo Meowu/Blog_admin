@@ -42,7 +42,7 @@ class ApiManager {
     config.method = data.method;
     config.url = data.url;
     config.body = data.params; //参数由拦截器分配,具体代码在 src/interceptors/params.js
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
 
     return axios(config).then(res => this.onSuccess(res)).catch(err => this.onFailure(err));
   }

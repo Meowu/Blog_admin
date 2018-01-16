@@ -8,7 +8,6 @@ export default function(config) {
     config.params = config.body;
     return config;
   }
-
   const contentType = config.headers['Content-Type'];
   const isUrlencode = !contentType || contentType.indexOf('x-www-form-urlencoded') !== -1;
   if (isUrlencode) {
@@ -16,6 +15,7 @@ export default function(config) {
   } else {
     config.data = params;
   }
-
+  
+  console.log('incepted: ', config);
   return config
 }

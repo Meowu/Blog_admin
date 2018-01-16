@@ -7,7 +7,7 @@ const DEFAULT_JSON_HEADER = {
   'Accept': 'application/json'
 }
 
-const BASE_URL = 'http://localhost:3000/api/v1'
+const BASE_URL = 'http://127.0.0.1:3000/api/v1'
 export const baseSource = ''
 
 export default {

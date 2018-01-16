@@ -53,9 +53,9 @@
 				// }).then(() => {
 				// 	this.$router.push('/index')
 				// }).catch(e => alert(e.message))
-				Api.login('admin', '123456').then(() => {
-					this.$router.push('/index')
-				})
+				// Api.login('', '123456').then(() => {
+				// 	this.$router.push('/index')
+				// })
 				let promise = new Promise((resolve, reject) => {
 					self.$refs[formName].validate(valid => {
 						if (valid) {
@@ -70,6 +70,7 @@
 					sendData.password = md5(sendData.password)
 					console.log(sendData);
 					Api.login(sendData.email, sendData.password).then(res => {
+						console.log(res);
 						let data = res.data
 						// this.$store.commit(types.USERDATA, res.data)
 						this.$router.push('/index')
