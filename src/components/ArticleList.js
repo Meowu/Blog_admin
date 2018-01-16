@@ -62,7 +62,7 @@ export default {
     })
   },
   render(h) {
-    const articles = this.articles.map(article => h(Card, {
+    const articles = this.list.map(article => h(Card, {
       props: {
         article: article
       }

@@ -8,6 +8,7 @@ const Login = () => import('../components/Login.vue')
 const Home = () => import('../components/Home.vue')
 const ArticleList = () => import('../components/ArticleList.js')
 const Write = () => import('../components/Write.vue')
+const Tags = () => import('../components/TagsList')
 
 export default new Router({
   mode: 'history',
@@ -31,6 +32,10 @@ export default new Router({
         {
           path: '/articles/:type',
           component: Write
+        },
+        {
+          path: '/tags',
+          component: Tags
         }
       ]
     }
