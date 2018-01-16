@@ -171,7 +171,7 @@ export default {
     <div class="account">
       <!-- <div class="write"><i class="el-icon-edit"></i></div> -->
       <el-tooltip class="item" effect="dark" content="写文章" placement="bottom">
-      <el-button icon='el-icon-edit' type='text' size='small' style="margin-right:24px;font-size:24px;"></el-button>
+      <el-button @click="$router.push('/articles/new')" icon='el-icon-edit' type='text' size='small' style="margin-right:24px;font-size:24px;"></el-button>
     </el-tooltip>
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
