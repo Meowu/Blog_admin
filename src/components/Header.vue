@@ -1,71 +1,13 @@
-<template>
-  <header class="header">
-    <!--logo-->
-    <!-- <div class="logo"></div> -->
-
-    <!-- <div class="menu">
-      <ul>
-        <template v-for="(menu,index) in menus">
-          <li :class="{current:currentTopIndex == index}">
-            <a @click="clickMenu(index,menu.url)">{{menu.title}}</a>
-          </li>
-        </template>
-      </ul>
-    </div> -->
-    <!-- user -->
-    <div class="account">
-      <el-dropdown @command="handleCommand">
-        <span class="el-dropdown-link">
-          <i class="fa fa-user-circle-o"></i>&nbsp;&nbsp;{{adminUser.nickname}}
-          <i class="el-icon-arrow-down el-icon-right" style="font-size: 10px;"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="updateNickname">修改昵称</el-dropdown-item>
-          <el-dropdown-item command="updatePassword">修改密码</el-dropdown-item>
-          <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
-
-    <!--修改昵称对话框-->
-    <el-dialog title="修改昵称" v-model="dialogUpdateNicknameVisible" >
-      <el-form :model="nicknameForm" ref="nicknameForm" :rules="nicknameFormRules">
-        <el-form-item prop="nickname" label="昵称">
-          <el-input placeholder="请输入昵称" :autofocus="autofocus" v-model="nicknameForm.nickname" @keyup.enter.native="updateNickname()"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogUpdateNicknameVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateNickname('nicknameForm')">确 定</el-button>
-      </div>
-    </el-dialog>
-
-    <!--修改密码对话框-->
-    <el-dialog title="修改密码" v-model="dialogUpdatePasswordVisible">
-      <el-form :model="passwordForm" :rules="passwordFormRules" ref="passwordForm" label-width="90px">
-        <el-form-item label="原密码" prop="oldPassword">
-          <el-input type="password" placeholder="请输入原密码" v-model="passwordForm.oldPassword" :autofocus="autofocus"></el-input>
-        </el-form-item>
-        <el-form-item label="新密码" prop="password">
-          <el-input type="password" placeholder="请输入新密码" v-model="passwordForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPassword">
-          <el-input type="password" placeholder="请输入新密码" v-model="passwordForm.checkPassword"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogUpdatePasswordVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updatePassword('passwordForm')">确 定</el-button>
-      </div>
-    </el-dialog>
-  </header>
-</template>
-
-
 <script>
 import Api from '@/api'
 import md5 from 'md5'
 export default {
+  props: {
+    isCollapse: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data() {
     const self = this;
     let validatePassword = (rule, value, callback) => {
@@ -145,6 +87,9 @@ export default {
       this.$router.push(url)
 
     },
+    toggle() {
+      this.$emit('update:isCollapse', !this.isCollapse)
+    },
     handleCommand(command) {
       let self = this;
       if (command == 'updateNickname') {
@@ -204,18 +149,94 @@ export default {
   }
 }
 </script>
+<template>
+  <header class="header">
+    <!--logo-->
+    <!-- <div class="logo"></div> -->
+
+    <!-- <div class="menu">
+      <ul>
+        <template v-for="(menu,index) in menus">
+          <li :class="{current:currentTopIndex == index}">
+            <a @click="clickMenu(index,menu.url)">{{menu.title}}</a>
+          </li>
+        </template>
+      </ul>
+    </div> -->
+    <!-- user -->
+    <div class="toggle">
+      <!-- <i class="fa" @click="toggle" :class=" isCollapse ? 'fa-caret-square-o-right' : 'fa-caret-square-o-left'" aria-hidden="true" style="width: 60px;line-height:50px;font-size:30px;height:50px;text-align:center;color:rgba(0,0,0,.4)"></i> -->
+      <i class="fa" @click="toggle" :class=" isCollapse ? 'el-icon-d-arrow-right' : 'el-icon-d-arrow-left'" aria-hidden="true" style="width: 30px;line-height:50px;font-size:24px;height:50px;text-align:center;"></i>
+    </div>
+    <div class="account">
+      <!-- <div class="write"><i class="el-icon-edit"></i></div> -->
+      <el-tooltip class="item" effect="dark" content="写文章" placement="bottom">
+      <el-button icon='el-icon-edit' type='text' size='small' style="margin-right:24px;font-size:24px;"></el-button>
+    </el-tooltip>
+      <el-dropdown @command="handleCommand">
+        <span class="el-dropdown-link">
+          <i class="fa fa-user-circle-o" style="font-size:24px;"></i>&nbsp;&nbsp;{{adminUser.nickname}}
+          <i class="el-icon-arrow-down el-icon-right" style="font-size: 18px;"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="updateNickname">修改昵称</el-dropdown-item>
+          <el-dropdown-item command="updatePassword">修改密码</el-dropdown-item>
+          <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+
+    <!--修改昵称对话框-->
+    <el-dialog title="修改昵称" v-model="dialogUpdateNicknameVisible" >
+      <el-form :model="nicknameForm" ref="nicknameForm" :rules="nicknameFormRules">
+        <el-form-item prop="nickname" label="昵称">
+          <el-input placeholder="请输入昵称" :autofocus="autofocus" v-model="nicknameForm.nickname" @keyup.enter.native="updateNickname()"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogUpdateNicknameVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updateNickname('nicknameForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--修改密码对话框-->
+    <el-dialog title="修改密码" v-model="dialogUpdatePasswordVisible">
+      <el-form :model="passwordForm" :rules="passwordFormRules" ref="passwordForm" label-width="90px">
+        <el-form-item label="原密码" prop="oldPassword">
+          <el-input type="password" placeholder="请输入原密码" v-model="passwordForm.oldPassword" :autofocus="autofocus"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="password">
+          <el-input type="password" placeholder="请输入新密码" v-model="passwordForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPassword">
+          <el-input type="password" placeholder="请输入新密码" v-model="passwordForm.checkPassword"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogUpdatePasswordVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updatePassword('passwordForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+  </header>
+</template>
+
+
 
 <style>
 header.header {
-  padding-left: 150px;
+  display: block;
+  padding: 0 10px;
   height: 50px;
   width: 100%;
   z-index: 8;
+  /* float: right; */
   background-color: #fff;
   display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   /* color: rgba(0, 0, 0, .45); */
   box-sizing: border-box;
-  box-shadow: inset 0 -1px 1px rgba(0, 21, 40, .06)
+  /* box-shadow: inset 0 -1px 1px rgba(0, 21, 40, .06) */
   /* box-shadow: 0 1px 4px rgba(0,21,41,.08); */
 }
 
@@ -228,23 +249,23 @@ header.header {
   margin-left: 20px;
 } */
 
-.menu {
+/* .menu {
   margin-right: auto;
-}
+} */
 
-.account {
+/* .account {
   font-size: 16px;
   line-height: 50px;
   margin-right: 15px;
   cursor: pointer;
-}
+} */
 
 /* .account .el-dropdown span * {
   color: inherit;
   font-size: 16px;
 } */
 
-.collapse-menu-bar {
+/* .collapse-menu-bar {
   padding: 10px;
   position: absolute;
   top: 0;
@@ -252,33 +273,33 @@ header.header {
   font-size: 16px;
   background: #1ab394;
   color: white;
-}
+} */
 
-.menu ul {
+/* .menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-}
+} */
 
-.menu li {
+/* .menu li {
   float: left;
   cursor: pointer;
-}
+} */
 
-.menu li.current {
+/* .menu li.current {
   background-color: #eee;
   color: #000;
-}
-.menu li a {
-  /* color: inherit; */
+} */
+/* .menu li a {
+  color: inherit;
   color: rgba(0, 0, 0, .5);
   font-size: 16px;
-  /* font-weight: bold; */
+  font-weight: bold;
   text-decoration: none;
   line-height: 50px;
   height: 50px;
   padding: 0 10px;
   display: block;
-}
+} */
 </style>

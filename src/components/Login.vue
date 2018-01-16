@@ -43,43 +43,43 @@
 		methods: {
 			async login(formName) {
 				let self = this;
-				axios({
-					method: 'post',
-					url: 'http://localhost:3000/api/v1/login',
-					data: {
-					  email: 'xiaojie@gmail.com',
-					  password: 'e10adc3949ba59abbe56e057f20f883e'
-					}
-				}).then(() => {
-					this.$router.push('/index')
-				}).catch(e => alert(e.message))
-				// Api.login('admin', '123456').then(() => {
+				// axios({
+				// 	method: 'post',
+				// 	url: 'http://localhost:3000/api/v1/login',
+				// 	data: {
+				// 	  email: 'xiaojie@gmail.com',
+				// 	  password: 'e10adc3949ba59abbe56e057f20f883e'
+				// 	}
+				// }).then(() => {
 				// 	this.$router.push('/index')
-				// })
-		// 		let promise = new Promise((resolve, reject) => {
-		// 			self.$refs[formName].validate(valid => {
-		// 				if (valid) {
-		// 					resolve(true);
-		// 				} else {
-		// 					reject('error')
-		// 				}
-		// 			})
-		// 		})
-		// 		promise.then(success => {
-		// 			let sendData = self.adminUser
-		// 			sendData.password = md5(sendData.password)
-		// 			console.log(sendData);
-		// 			Api.login(sendData.email, sendData.password).then(res => {
-		// 				let data = res.data
-		// 				// this.$store.commit(types.USERDATA, res.data)
-		// 				this.$router.push('/index')
+				// }).catch(e => alert(e.message))
+				Api.login('admin', '123456').then(() => {
+					this.$router.push('/index')
+				})
+				let promise = new Promise((resolve, reject) => {
+					self.$refs[formName].validate(valid => {
+						if (valid) {
+							resolve(true);
+						} else {
+							reject('error')
+						}
+					})
+				})
+				promise.then(success => {
+					let sendData = self.adminUser
+					sendData.password = md5(sendData.password)
+					console.log(sendData);
+					Api.login(sendData.email, sendData.password).then(res => {
+						let data = res.data
+						// this.$store.commit(types.USERDATA, res.data)
+						this.$router.push('/index')
 						
-		// 			}).catch(err=>{
-		// 				this.$message.error(err)
-		// 			})
-		// 		}, error => {
-		// 			this.$message(data.message)
-		// 		})
+					}).catch(err=>{
+						this.$message.error(err)
+					})
+				}, error => {
+					this.$message(data.message)
+				})
 			}
 		}
 	}

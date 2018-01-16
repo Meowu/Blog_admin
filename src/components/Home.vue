@@ -1,9 +1,9 @@
 <template>
-  <div class="sub-index" >
-    <v-head ref="headerm"></v-head>
-    <div class="bottom">
-      <v-sidebar class="left"></v-sidebar>
-      <div class="right" :style="{'padding': '15px','box-sizing':'border-box','margin-left':offsetLeft+'px', 'width':width, 'margin-bottom': mbt}">
+  <div class="home" >
+    <v-sidebar class="left" :isCollapse.sync='collapse'></v-sidebar>
+    <div class="right">
+      <v-head ref="headerm" :isCollapse.sync='collapse'></v-head>
+      <div class="bottom">
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>
@@ -21,8 +21,7 @@ import Api from "@/api";
 export default {
   data() {
     return {
-      menus: [],
-      subMenus: {},
+      collapse: false,
       currentTopIndex: 0,
       last_time: 0,
       source: "",
@@ -42,39 +41,6 @@ export default {
     isLoading() {
       return this.$store.state.isLoading;
     },
-    offsetLeft() {
-      // if (this.hasSidebar()) {
-      //   return 180;
-      // }
-      return 180;
-    },
-    hiddenSidebar() {
-      let sidebar = this.hasSidebar();
-      if (sidebar) {
-        this.subMenus = sidebar;
-        return false;
-      }
-      return true;
-    },
-    width() {
-      if (this.hasSidebar()) {
-        return "calc(100% - 180px)";
-      }
-      return "calc(100%)";
-    },
-    mbt() {
-      // let rt = this.$route.path.split("/");
-      // if (
-      //   rt[rt.length - 1] === "users" ||
-      //   rt[rt.length - 2] === "projects" ||
-      //   rt[rt.length - 1] === "index" ||
-      //   rt[rt.length - 1] === "scenes"
-      // ) {
-      //   return "52px";
-      // }
-      // return "0px";
-      return '52px'
-    }
   },
   methods: {
     getMenus() {
@@ -114,8 +80,8 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
-
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -127,43 +93,62 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 100;
+  font-weight: 400;
 }
 
-.bottom {
+.home {
   display: flex;
+  height: 100%;
+  width: 100%;
+  flex-flow: row nowrap;
 }
 
-.bottom .left {
-  width: 180px;
-  margin-bottom: 52px;
+.home .left {
+  z-index: 999;
+  height: 100%;
+}
+.el-menu {
+  width: 152px;
+  height: 100%;
+  overflow: hidden;
+  color: hsla(0,0%,100%,.65);
+}
+.el-menu ul li:hover {
+  color: #409EFF;
+}
+.el-menu-item, .el-submenu__title {
+  /* max-width: 150px; */
+  color: hsla(0,0%,100%,.65);
+}
+#app > div > div.left > ul > li.el-submenu.is-opened > ul > li {
+  background-color: #000c17;
+}
+.el-submenu .el-menu-item {
+  box-sizing: border-box;
+  /* max-width: 152px; */
+  /* min-width: 150px; */
+}
+.el-menu--collapse {
+  width: 64px;
 }
 
-.bottom .right {
-  margin-top: 50px;
+.home .right {
+  /* margin-top: 50px;
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
+  width: 100%;
+  height: 100%;
+  flex: auto;
   background-color: #f0f2f5;
   /* margin-left: 180px; */
-  margin-bottom: 52px;
-  overflow-y: auto;
-  flex: 1;
-  margin-right: auto;
+  /* margin-bottom: 52px; */
+  /* overflow-y: auto; */
+  overflow: hidden;
+  /* margin-right: auto; */
   color: #606060;
 }
 
-div.fix-pagination {
-  position: fixed;
-  padding: 0 10px;
-  box-sizing: border-box;
-  width: calc(100% - 180px);
-  bottom: 10px;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-between;
-}
 div.el-table div.cell img.image {
   width: 60px;
   height: 60px;
@@ -173,7 +158,7 @@ div.el-table div.cell img.image {
   margin-right: 5px;
 }
 
- .el-menu-item.is-active{
+ /* .el-menu-item.is-active{
   color: #f87b04;
-}
+} */
 </style>
