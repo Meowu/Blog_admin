@@ -148,7 +148,12 @@ h6 {
   /* margin-right: auto; */
   color: #606060;
 }
-
+.home .bottom {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 20px;
+}
 div.el-table div.cell img.image {
   width: 60px;
   height: 60px;

@@ -20,7 +20,7 @@ export default {
 
 <template>
   <div>
-    <el-menu :router='true' default-active='/index' background-color='#001529' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu :router='true' :default-active='$route.path' background-color='#001529' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
       <div style="width:100%;text-align:center;background:#fff;height: 50px;">
         <!-- <a href="."><img src="../assets/icon.png" width="58" height="50" alt="Logo" ></a> -->
       </div>
