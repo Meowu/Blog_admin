@@ -135,10 +135,10 @@ export default {
   
   /**
   新增一个分类 */
-  postCategories() {
+  postCategories(name) {
     const data = {
       url: `/categories/new`,
-      params: {}
+      params: { name }
     }
     return Api.post(data)
   }

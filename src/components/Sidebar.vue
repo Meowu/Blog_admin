@@ -45,7 +45,7 @@ export default {
         <span slot="title">标签管理</span>
       </el-menu-item>
       <el-menu-item index="/categories">
-        <i class="el-icon-tickets"></i>
+        <i class="el-icon-date"></i>
         <span slot="title">分类管理</span>
       </el-menu-item>
       <el-menu-item index="/settings">

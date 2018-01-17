@@ -9,6 +9,7 @@ const Home = () => import('../components/Home.vue')
 const ArticleList = () => import('../components/ArticleList.js')
 const Write = () => import('../components/Write.vue')
 const Tags = () => import('../components/TagsList')
+const Categories = () => import('../components/CategoryList.vue')
 
 export default new Router({
   mode: 'history',
@@ -36,6 +37,10 @@ export default new Router({
         {
           path: '/tags',
           component: Tags
+        },
+        {
+          path: '/categories',
+          component: Categories
         }
       ]
     }
