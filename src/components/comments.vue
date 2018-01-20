@@ -10,7 +10,7 @@ export default {
   <div class="article-comment">
     <div class="article-comment-meta">
       <div class="article-comment-meta-avatar">
-        <img src="../assets/ic_avatar.png" alt="">
+        <img src="../assets/avatar.png" alt="">
       </div>
       <div class="article-comment-meta-detail">
         <h4 class="article-comment-meta-title">
@@ -18,7 +18,7 @@ export default {
           <span class="post-time">1天前</span>
         </h4>
         <div class="article-comment-meta-content">
-          Mark 真好用。
+          Mark 真好用。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。
         </div>
       </div>
     </div>
@@ -38,12 +38,13 @@ $link = #1890ff
       height 32px
       width 32px
       margin-right 16px
+      // flex 0 0 width 32px
       img 
-        width 100%
-        height 100%
+        width 32px 
+        height 32px
         border-radius 50%
     .article-comment-meta-detail
-       color rgba(0,0,0,.65)
+      color rgba(0,0,0,.65)
       flex 1 1 auto
       .article-comment-meta-title 
         display flex 
@@ -52,6 +53,7 @@ $link = #1890ff
           line-height 1.5
         .post-time 
           color rgba(0,0,0,.4)
+          margin-left 10px
       .article-comment-meta-content 
         line-height 1.2
     
