@@ -1,5 +1,6 @@
 <script>
 import CommentItem from "./comments.vue";
+import Api from "@/api"
 export default {
   name: "CommentList",
   components: {
@@ -7,7 +8,7 @@ export default {
   },
   data() {
     return {
-      
+      list: [],
       timerange: [],
       params: {
         query: '',
@@ -18,6 +19,19 @@ export default {
         { label: '姓名', value: 3}
       ]
     };
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    async getList() {
+      try {
+        const result = Api.getComments(this.params)
+        this.list = result.data
+      } catch (error) {
+        
+      }
+    }
   }
 };
 </script>

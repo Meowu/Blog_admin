@@ -141,6 +141,14 @@ export default {
       params: { name }
     }
     return Api.post(data)
+  },
+
+  getComments(args) {
+    const data = {
+      url: '/comments/cms/all',
+      params: { ...args }
+    }
+    return Api.get(data)
   }
 
 }
