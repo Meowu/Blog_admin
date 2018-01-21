@@ -1,6 +1,12 @@
 <script>
 export default {
   name: "CommentItem",
+  props: {
+    meta: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {}
   }
@@ -14,12 +20,13 @@ export default {
       </div>
       <div class="article-comment-meta-detail">
         <h4 class="article-comment-meta-title">
-          <span><a href="">Meowu</a> 回复在 <a href="">Markdown 语法学习笔记</a></span>
+          <span><a href="">{{ meta.name }}</a> 回复在 <a href="">{{ meta.article.title }}</a></span>
           <span class="post-time">1天前</span>
         </h4>
-        <div class="article-comment-meta-content">
+        <!-- <div class="article-comment-meta-meta">
           Mark 真好用。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。
-        </div>
+        </div> -->
+        <div class="article-comment-meta-meta" v-html="meta.content"></div>
       </div>
     </div>
   </div>
@@ -48,14 +55,15 @@ $link = #1890ff
       flex 1 1 auto
       .article-comment-meta-title 
         display flex 
-        justify-content space-between
+        justify-meta space-between
         span 
           line-height 1.5
         .post-time 
           color rgba(0,0,0,.4)
           margin-left 10px
-      .article-comment-meta-content 
+      .article-comment-meta-meta 
         line-height 1.2
+        padding-top 10px
     
 </style>
 
