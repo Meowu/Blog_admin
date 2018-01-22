@@ -35,7 +35,18 @@ export default {
       } catch (error) {
         
       }
+    },
+    selectDate(pick) {
+      if (pick) {
+        this.params.start_date = +new Date(pick[0])
+        this.params.end_date = +new Date(pick[1])
+      } else {
+        this.params.start_date = '',
+        this.params.end_date = ''
+      }
+      this.getList()
     }
+
   }
 };
 </script>
@@ -53,6 +64,7 @@ export default {
         style="width: 240px;" 
         v-model="timerange" 
         type="daterange"
+        @change="selectDate"
         start-placeholder="开始日期"
         end-placeholder="结束日期" 
         range-separator=" - " 
