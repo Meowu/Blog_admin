@@ -24,6 +24,7 @@ export default {
       },
       categories: [],
       tags: [],
+      articleId: '',
       configs: {
         status: false,
         toolbar: ["image"]
@@ -38,8 +39,13 @@ export default {
     }
   },
   created() {
+    const type = this.$route.params.type
     this.getTags()
     this.getCategories()
+    if (type !== 'new') {
+      this.articleId = type
+      this.getArticle(type)
+    }
   },
   // mounted() {
   //   this.$nextTick(() => {
@@ -47,6 +53,19 @@ export default {
   //   });
   // },
   methods: {
+    async getArticle(id) {
+      try {
+        const result = await Api.getOneArticle(id)
+        // this.post = result.data
+        const { markdown, tags, category, cover, summary, title, path} = result.data
+        const ids = tags.map(tag => tag._id)
+        this.article = { markdown: markdown, cover: cover, summary: summary, title: title, path: path, category: category._id, tags: ids }
+        // this.article.category = category._id
+        // tags.forEach(tag => this.article.tags.push(tag._id))
+      } catch (error) {
+        
+      }
+    },
     async getTags() {
       try {
         const res = await Api.getTags()
@@ -70,17 +89,20 @@ export default {
       try {
         if ( type === 'new' ) {
           const res = await Api.postArticles(this.article)
+          this.article.tags = this.article.tags.split(',')
           this.$message.success('发布成功')    
         } else {
           const res = await Api.putArticles(type, this.article)
+          this.article.tags = this.article.tags.split(',')
           this.$message.success('修改成功')    
         }
         
       } catch (error) {
         this.article.tags = this.article.tags.split(',')
-        this.$message.error('error.message')
+        this.$message.error(error.message)
       }
     },
+    publish() {},
     handleInput(val) {
       this.output = val;
     },
@@ -111,19 +133,6 @@ export default {
             <!-- <el-option label="区域二" value="beijing"></el-option> -->
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="活动时间" required>
-          <el-col :span="11">
-            <el-form-item prop="date1">
-              <el-date-picker type="date" placeholder="选择日期" v-model="article.date1" style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-form-item prop="date2">
-              <el-time-picker type="fixed-time" placeholder="选择时间" v-model="article.date2" style="width: 100%;"></el-time-picker>
-            </el-form-item>
-          </el-col>
-        </el-form-item> -->
         <el-form-item label="概要" prop="summary">
           <el-input type="textarea" :rows='6' v-model="article.summary" style="width: 300px;"></el-input>
         </el-form-item>
@@ -145,7 +154,10 @@ export default {
           <el-button type="primary" @click="submitForm('article')">立即创建</el-button>
           <el-button @click="resetForm('article')">重置</el-button>
         </el-form-item> -->
+        <div style="text-align: center;">
         <el-button @click="post">发布文章</el-button>
+
+        </div>
       </el-form>
       <div class="editor-wrap">
         <div class="editor">
@@ -194,7 +206,7 @@ export default {
 <style lang="stylus" scoped>
 .article-editor
   padding 20px
-  height 90%
+  // height 90%
   box-sizing border-box
   background-color #fff
   .article-info 

@@ -13,7 +13,7 @@ export default {
   <div class="article-card">
     <el-card class="box-card">
       <div slot="header" class="header">
-        <h3>{{ article.title }}</h3>
+        <h3 @click="$router.push(`/articles/${article.id}`)">{{ article.title }}</h3>
         <div class="article-tags" v-if="article.tags.length">
           <el-tag v-for='(tag, index) in article.tags' :key='"tag"+index'>{{ tag.name }}</el-tag>
           <!-- <el-tag type="success">工匠精神</el-tag>
@@ -51,6 +51,7 @@ export default {
         font-weight 500
         margin 0
         padding 10px 0
+        cursor pointer
       .article-tags .el-tag + .el-tag 
         margin-left 10px
     .main
