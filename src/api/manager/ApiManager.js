@@ -1,6 +1,6 @@
 import axios from 'axios'
 import CONFIG from './config'
-import vue from 'vue'
+import vm from '../../main'
 import errorUtils from '@/utils/errorUtils'
 import paramsInterceptor from '../interceptors/params'
 import router from '../../router'
@@ -43,11 +43,13 @@ class ApiManager {
     config.url = data.url;
     config.body = data.params; //参数由拦截器分配,具体代码在 src/interceptors/params.js
     // axios.defaults.withCredentials = true;
+    vm.$bar.start()
 
     return axios(config).then(res => this.onSuccess(res)).catch(err => this.onFailure(err));
   }
 
   onSuccess(response) {
+    vm.$bar.finish()
     const result = response.data;
     if (result && result.code == 0) {
       return Promise.resolve(result);
@@ -63,6 +65,7 @@ class ApiManager {
 
   onFailure(error) {
     // errorUtils.showError(error);
+    vm.$bar.finish()
     if (error.type) {
       /**
        * 如果error知道了确切的类型,表明是从onSuccess

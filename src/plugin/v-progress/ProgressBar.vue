@@ -73,7 +73,8 @@ export default {
   /* background-color: #efc14e; */
   z-index: 999;
   /* color#ffca2b */
-  transition: opacity .4s;
+  /* 给宽度加上动画让过渡看起来更加顺滑，尤其是加载迅速的时候 */
+  transition: opacity .4s, width .3s;  
 }
 </style>
 
