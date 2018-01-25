@@ -23,7 +23,7 @@ export default {
         } catch (error) {
           this.showError(error.message)
         }
-      })
+      }).catch(e => {})
     }
   }
 }

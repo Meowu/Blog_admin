@@ -44,6 +44,14 @@ export default {
     return Api.put(data)
   },
 
+  deleteOneArticle(id) {
+    const data = {
+      url: `/articles/cms/${id}`,
+      params: {}
+    }
+    return Api.delete(data)
+  },
+
   /**
   后台获取一篇文章
    */

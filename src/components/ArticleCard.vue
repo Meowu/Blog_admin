@@ -1,4 +1,5 @@
 <script>
+import Api from '@/api'
 export default {
   name: "ArticleCard",
   props: {
@@ -7,12 +8,30 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      showBtn: false
+    }
+  },
+  methods: {
+    deleteArticle(id) {
+      this.$confirm('确定删除该文章？').then( async () => {
+        try {
+          const res = await Api.deleteOneArticle(id)
+          this.show('删除成功')
+          this.$emit('refresh')
+        } catch (error) {
+          this.showError(error.message)
+        }
+      }).catch(() => {})
+    }
+  }
 };
 </script>
 <template>
   <div class="article-card">
     <el-card class="box-card">
-      <div slot="header" class="header">
+      <div slot="header" class="header" @mouseenter='showBtn = true' @mouseleave='showBtn = false'>
         <h3 @click="$router.push(`/articles/${article.id}`)">{{ article.title }}</h3>
         <div class="article-tags" v-if="article.tags.length">
           <el-tag v-for='(tag, index) in article.tags' :key='"tag"+index'>{{ tag.name }}</el-tag>
@@ -21,6 +40,7 @@ export default {
           <el-tag type="warning">交互设计</el-tag>
           <el-tag type="danger">优质服务</el-tag> -->
         </div>
+        <el-button @click="deleteArticle(article.id)" v-show='showBtn' class="article-btn" type="text" icon="el-icon-delete"></el-button>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
       </div>
       <div class="main">
@@ -46,6 +66,7 @@ export default {
   .box-card 
     width 100%
     .header 
+      position relative
       h3 
         font-size 20px
         font-weight 500
@@ -54,6 +75,13 @@ export default {
         cursor pointer
       .article-tags .el-tag + .el-tag 
         margin-left 10px
+      .article-btn
+        font-size 24px
+        position absolute
+        right 0
+        top 0
+        color #000
+        padding 5px
     .main
       // padding 20px 0
       max-width 75%

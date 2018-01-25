@@ -57,14 +57,22 @@ export default {
     };
   },
   created() {
-    Api.getArticles({page: 1, page_size: 10}).then(res => {
-      this.list = res.data
-    })
+    this.getArticles()
+  },
+  methods: {
+    getArticles() {
+      Api.getArticles({page: 1, page_size: 10}).then(res => {
+        this.list = res.data
+      }).catch(e => this.showError(e.message))
+    }
   },
   render(h) {
     const articles = this.list.map(article => h(Card, {
       props: {
         article: article
+      },
+      on: {
+        refresh: this.getArticles
       }
     }));
     return h(
