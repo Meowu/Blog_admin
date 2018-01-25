@@ -1,4 +1,5 @@
 <script>
+import Api from '@/api'
 export default {
   name: "CommentItem",
   props: {
@@ -8,12 +9,27 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      showBtn: false
+    }
+  },
+  methods: {
+    deleteComment(id) {
+      this.$confirm('该操作将会删除该评论以及其所有回复').then(async () => {
+        try {
+          const res = await Api.deleteComment(id)
+          this.show(res.message)
+          this.$emit('refresh')
+        } catch (error) {
+          this.showError(error.message)
+        }
+      })
+    }
   }
 }
 </script>
 <template>
-  <div class="article-comment">
+  <div class="article-comment" @mouseenter='showBtn = true' @mouseleave='showBtn = false'>
     <div class="article-comment-meta">
       <div class="article-comment-meta-avatar">
         <img src="../assets/avatar.png" alt="">
@@ -27,6 +43,7 @@ export default {
           Mark 真好用。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。那是一种内在的东西，他们到达不了，也无法触及的。
         </div> -->
         <div class="article-comment-meta-meta" v-html="meta.content"></div>
+        <el-button @click="deleteComment(meta.id)" v-show='showBtn' class="article-comment-btn" type="text" icon="el-icon-delete"></el-button>
       </div>
     </div>
   </div>
@@ -51,6 +68,7 @@ $link = #1890ff
         height 32px
         border-radius 50%
     .article-comment-meta-detail
+      position relative
       color rgba(0,0,0,.65)
       flex 1 1 auto
       .article-comment-meta-title 
@@ -64,6 +82,13 @@ $link = #1890ff
       .article-comment-meta-meta 
         line-height 1.2
         padding-top 10px
+        margin-right 20px
+      .article-comment-btn
+        position absolute
+        right 0
+        top 0
+        color #000
+        padding 5px
     
 </style>
 

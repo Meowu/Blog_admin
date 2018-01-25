@@ -149,6 +149,15 @@ export default {
       params: { ...args }
     }
     return Api.get(data)
+  },
+
+  deleteComment(id) {
+    const data = {
+      url: `/comments/cms/${id}`,
+      params: {}
+    }
+    return Api.delete(data)
   }
+
 
 }

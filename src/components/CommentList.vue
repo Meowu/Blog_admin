@@ -76,7 +76,7 @@ export default {
         <comment-item />
       </div> -->
       <el-card v-for="(comment, i) in list" :key="i" class="comment-card">
-        <comment-item :meta="comment" />
+        <comment-item :meta="comment" @refresh='getList' />
       </el-card>
     </div>
   </div>
