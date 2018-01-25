@@ -32,14 +32,22 @@ export default {
           <el-menu-item index="/index">数据统计</el-menu-item>
           <el-menu-item index="/charts">图表查看</el-menu-item>
       </el-submenu>
-      <el-submenu index="/articles">
+      <!-- <el-submenu index="/articles">
         <template slot="title">
           <i class="el-icon-document"></i>
           <span slot="title">文章管理</span>
         </template>
           <el-menu-item index="/articles">文章列表</el-menu-item>
           <el-menu-item index="/comments">评论列表</el-menu-item>
-      </el-submenu>
+      </el-submenu> -->
+      <el-menu-item index="/articles">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">文章列表</span>
+      </el-menu-item>
+      <el-menu-item index="/comments">
+        <i class="el-icon-menu"></i>
+        <span slot="title">评论列表</span>
+      </el-menu-item>
       <el-menu-item index="/tags">
         <i class="el-icon-service"></i>
         <span slot="title">标签管理</span>
