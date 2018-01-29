@@ -8,6 +8,7 @@ export default {
       required: true
     }
   },
+  inject: ['getList'],
   data() {
     return {
       showBtn: false
@@ -19,7 +20,8 @@ export default {
         try {
           const res = await Api.deleteComment(id)
           this.show(res.message)
-          this.$emit('refresh')
+          // this.$emit('refresh')
+          this.getList()
         } catch (error) {
           this.showError(error.message)
         }
@@ -32,11 +34,15 @@ export default {
   <div class="article-comment" @mouseenter='showBtn = true' @mouseleave='showBtn = false'>
     <div class="article-comment-meta">
       <div class="article-comment-meta-avatar">
-        <img src="../assets/avatar.png" alt="">
+        <!-- <img src="../assets/avatar.png" alt=""> -->
+        <img :src="meta.avatar ? meta.avatar : require('../assets/avatar.png')" alt="">
       </div>
       <div class="article-comment-meta-detail">
         <h4 class="article-comment-meta-title">
-          <span><a href="">{{ meta.name }}</a> 回复在 <a href="">{{ meta.article.title }}</a></span>
+          <span><a href="">{{ meta.name }}</a> 回复 
+          <a href="">{{ meta.reply_to.name }}</a>
+          <!-- <a v-else href="">{{ meta.article.title }}</a> -->
+          </span>
           <span class="post-time">1天前</span>
         </h4>
         <!-- <div class="article-comment-meta-meta">

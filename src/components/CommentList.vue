@@ -6,6 +6,11 @@ export default {
   components: {
     CommentItem
   },
+  provide() {
+    return {
+      getList: this.getList
+    }
+  },
   data() {
     return {
       list: [],
@@ -76,7 +81,7 @@ export default {
         <comment-item />
       </div> -->
       <el-card v-for="(comment, i) in list" :key="i" class="comment-card">
-        <comment-item :meta="comment" @refresh='getList' />
+        <comment-item :meta="comment" />
       </el-card>
     </div>
   </div>
