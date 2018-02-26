@@ -128,8 +128,8 @@ export default {
           <el-input v-model="article.path" style="width: 300px;"></el-input>
         </el-form-item>
         <el-form-item label="分类" required prop="category">
-          <el-select style="width: 300px;" v-model="article.category" placeholder="请选择活动区域">
-            <el-option v-for="(category, i) in categories" :label="category.name" :value="category._id" :key="'category' + i"></el-option>
+          <el-select style="width: 300px;" v-model="article.category" placeholder="请选择分类">
+            <el-option v-for="(category, i) in categories" :label="category.name" :value="category.id" :key="'category' + i"></el-option>
             <!-- <el-option label="区域二" value="beijing"></el-option> -->
           </el-select>
         </el-form-item>
@@ -138,7 +138,7 @@ export default {
         </el-form-item>
         <el-form-item label="标签" prop="tags" style="width: 400px;">
           <el-checkbox-group v-model="article.tags">
-            <el-checkbox v-for="(tag, i) in tags" :label="tag._id" style="margin-left: 30px;" :key="i">{{ tag.name }}</el-checkbox>
+            <el-checkbox v-for="(tag, i) in tags" :label="tag.id" style="margin-left: 30px;" :key="i">{{ tag.name }}</el-checkbox>
             <!-- <el-checkbox label="地推活动" name="type"></el-checkbox>
             <el-checkbox label="线下主题活动" name="type"></el-checkbox>
             <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox> -->

@@ -66,7 +66,7 @@ export default {
         </el-select>
       </el-input>
       <el-date-picker 
-        style="width: 240px;" 
+        style="width: 290px;" 
         v-model="timerange" 
         type="daterange"
         @change="selectDate"
