@@ -10,6 +10,13 @@ export default {
     return Api.post(data)
   },
 
+  getToken() {
+    const data = {
+      url: `/token`,
+      params: {}
+    }
+    return Api.get(data)
+  },
   /**
   获取文章列表
    */

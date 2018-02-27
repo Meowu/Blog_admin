@@ -1,6 +1,7 @@
 <script>
 import markdownEditor from "vue-simplemde/src/markdown-editor";
 import Api from '@/api'
+import * as Qiniu from 'qiniu-js'
 // import hljs from 'highlight.js';
 
 // window.hljs = hljs;
@@ -22,9 +23,12 @@ export default {
         category: '',
         markdown: '',
       },
+      domain: 'http://oyaycf3zq.bkt.clouddn.com/',
+      imageUrl: '',
       categories: [],
       tags: [],
       articleId: '',
+      token: '',
       configs: {
         status: false,
         toolbar: ["image"]
@@ -42,6 +46,7 @@ export default {
     const type = this.$route.params.type
     this.getTags()
     this.getCategories()
+    Api.getToken().then(res => this.token = res.token)
     if (type !== 'new') {
       this.articleId = type
       this.getArticle(type)
@@ -59,6 +64,7 @@ export default {
         // this.post = result.data
         const { markdown, tags, category, cover, summary, title, path} = result.data
         const ids = tags.map(tag => tag._id)
+        this.imageUrl = cover
         this.article = { markdown: markdown, cover: cover, summary: summary, title: title, path: path, category: category._id, tags: ids }
         // this.article.category = category._id
         // tags.forEach(tag => this.article.tags.push(tag._id))
@@ -103,6 +109,32 @@ export default {
       }
     },
     publish() {},
+    onerror(err) {
+      this.$message.error(err.message)
+    },
+    next(res) {
+      console.log(res.total);
+    },
+    complete(res) {
+      console.log(res);
+      this.article.cover = this.domain + res.key
+      this.imageUrl = this.domain + res.key
+      this.$message.success('上传成功')
+    },
+    uploadQiniu(file, key, token) {
+      const config = {
+        useCdnDomain: true,
+        region: Qiniu.region.z2
+      };
+      const observable = Qiniu.upload(file, key, token, null, config)
+      console.log(token);
+      const subscribe = observable.subscribe(this.next, this.onerror, this.complete)
+    },
+    beforeUpload(file) {
+      // this.file = file
+      const KEY = file.name
+      this.uploadQiniu(file, KEY, this.token)
+    },
     handleInput(val) {
       this.output = val;
     },
@@ -121,8 +153,22 @@ export default {
   <div class="article-editor">
     <div class="article-info">
       <el-form :model="article" ref="article" label-width="80px" class="article-form">
+        <el-form-item label="封面" prop="title" required>
+          <el-upload
+            class="avatar-uploader"
+            action=''
+            :show-file-list='false'
+            :http-request='uploadQiniu'
+            :before-upload="beforeUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="标题" prop="title" required>
           <el-input v-model="article.title" style="width: 300px;"></el-input>
+        </el-form-item>
+        <el-form-item label="封面" prop="title" required>
+          <el-input v-model="article.cover" style="width: 300px;"></el-input>
         </el-form-item>
         <el-form-item label="路径" prop="path" required>
           <el-input v-model="article.path" style="width: 300px;"></el-input>
@@ -220,5 +266,28 @@ export default {
       height 100%
   & >>> .article-info .editor-wrap .editor .markdown-editor .CodeMirror 
     height 400px
+  & >>> .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  & >>> .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  & >>> .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  & >>> .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>
 
