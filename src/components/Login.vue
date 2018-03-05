@@ -72,14 +72,16 @@
 					Api.login(sendData.email, sendData.password).then(res => {
 						console.log(res);
 						let data = res.data
+						console.log(data);
+						localStorage.setItem('BLOG_TOKEN', data.token)
 						// this.$store.commit(types.USERDATA, res.data)
 						this.$router.push('/index')
 						
 					}).catch(err=>{
-						this.$message.error(err)
+						this.$message.error(err.message)
 					})
 				}, error => {
-					this.$message(data.message)
+					this.$message(error.message)
 				})
 			}
 		}

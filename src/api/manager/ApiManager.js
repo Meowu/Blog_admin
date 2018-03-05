@@ -6,6 +6,10 @@ import paramsInterceptor from '../interceptors/params'
 import router from '../../router'
 
 axios.interceptors.request.use((config) => paramsInterceptor(config))
+// axios.interceptors.response.use((res) => {console.log(res)}, (err) => {
+//   console.log(err)
+//   return Promise.reject(err)
+// })
 
 class ApiManager {
   /**
@@ -54,15 +58,16 @@ class ApiManager {
     if (result && result.code == 0) {
       return Promise.resolve(result);
     }
-
     //处理业务错误
     const apiError = errorUtils.parseErrorFromResult(response);
-    if (apiError.code === 1) {  // 如果登录过期了或者未登录则跳转到登录页面。
+    console.log(apiError);
+    if (Number(apiError.code) === 1) {  // 如果登录过期了或者未登录则跳转到登录页面。
       return router.push('/login')
     }
+
     return Promise.reject(apiError);
   }
-
+  
   onFailure(error) {
     // errorUtils.showError(error);
     vm.$bar.finish()
