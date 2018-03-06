@@ -3,6 +3,8 @@ import qs from 'querystring'
 export default function(config) {
 	const method = config.method.toLowerCase();
   const params = config.body;
+  // const token = localStorage.getItem('BLOG_TOKEN')
+  // params.headers['x-access-token'] = token
 
   if (method === 'get') {
     config.params = config.body;

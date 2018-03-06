@@ -46,6 +46,8 @@ class ApiManager {
     config.method = data.method;
     config.url = data.url;
     config.body = data.params; //参数由拦截器分配,具体代码在 src/interceptors/params.js
+    const token = localStorage.getItem('BLOG_TOKEN')
+    config.headers['x-access-token'] = token
     // axios.defaults.withCredentials = true;
     vm.$bar.start()
 

@@ -17,7 +17,6 @@ export default {
   timeout: 15000,
   headers: {
     ...DEFAULT_X_HEADER,
-    'x-access-token': token,
     'X-Requested-With': 'XMLHttpRequest'
   }
 }
